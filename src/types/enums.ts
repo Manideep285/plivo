@@ -14,5 +14,6 @@ export enum IncidentSeverity {
 export enum MaintenanceStatus {
   SCHEDULED = "scheduled",
   IN_PROGRESS = "in_progress",
-  COMPLETED = "completed"
+  COMPLETED = "completed",
+  CANCELLED = "cancelled"
 }

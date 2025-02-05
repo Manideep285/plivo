@@ -88,6 +88,8 @@ export function MaintenanceScheduler({
   };
 
   const isScheduled = (status: MaintenanceStatus) => status === MaintenanceStatus.SCHEDULED;
+  const isCompleted = (status: MaintenanceStatus) => status === MaintenanceStatus.COMPLETED;
+  const isCancelled = (status: MaintenanceStatus) => status === MaintenanceStatus.CANCELLED;
 
   return (
     <div className="space-y-6">
@@ -229,12 +231,12 @@ export function MaintenanceScheduler({
           return (
             <Card key={maintenance.id} className={cn(
               "transition-all duration-200",
-              maintenance.status !== MaintenanceStatus.COMPLETED && "border-l-4",
+              !isCompleted(maintenance.status) && "border-l-4",
               {
-                "border-l-yellow-500": maintenance.status === MaintenanceStatus.SCHEDULED,
+                "border-l-yellow-500": isScheduled(maintenance.status),
                 "border-l-blue-500": maintenance.status === MaintenanceStatus.IN_PROGRESS,
-                "border-l-green-500": maintenance.status === MaintenanceStatus.COMPLETED,
-                "border-l-red-500": maintenance.status === MaintenanceStatus.CANCELLED,
+                "border-l-green-500": isCompleted(maintenance.status),
+                "border-l-red-500": isCancelled(maintenance.status)
               }
             )}>
               <CardHeader className="flex flex-row items-start justify-between space-y-0">
