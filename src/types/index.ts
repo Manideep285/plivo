@@ -1,3 +1,11 @@
+export * from './enums';
+export * from './maintenance';
+export * from './incident';
+export * from './service';
+export * from './user';
+export * from './team';
+export * from './organization';
+
 export type ServiceStatus = "operational" | "degraded" | "outage" | "maintenance";
 
 export type Service = {
@@ -29,28 +37,6 @@ export type IncidentUpdate = {
   id: string;
   message: string;
   status: IncidentStatus;
-  createdAt: string;
-  createdBy: string;
-};
-
-export type MaintenanceStatus = "scheduled" | "in-progress" | "completed" | "cancelled";
-
-export type Maintenance = {
-  id: string;
-  title: string;
-  description: string;
-  startTime: string;
-  endTime: string;
-  status: MaintenanceStatus;
-  serviceIds: string[];
-  createdBy?: string;
-  updates?: MaintenanceUpdate[];
-};
-
-export type MaintenanceUpdate = {
-  id: string;
-  message: string;
-  status: MaintenanceStatus;
   createdAt: string;
   createdBy: string;
 };

@@ -1,5 +1,5 @@
 import { useState, RefObject } from "react";
-import { Service, Maintenance, MaintenanceStatus } from "@/types";
+import { Service, MaintenanceBase, MaintenanceStatus } from "@/types";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,8 +16,8 @@ import { CalendarIcon, Clock, CheckCircle2, AlertCircle } from "lucide-react";
 
 interface MaintenanceSchedulerProps {
   services: Service[];
-  maintenances: Maintenance[];
-  onMaintenanceAdd: (maintenance: Omit<Maintenance, "id">) => void;
+  maintenances: MaintenanceBase[];
+  onMaintenanceAdd: (maintenance: Omit<MaintenanceBase, "id">) => void;
   dialogTriggerRef?: RefObject<HTMLButtonElement>;
 }
 
@@ -63,7 +63,7 @@ export function MaintenanceScheduler({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    const maintenanceData: Omit<Maintenance, "id"> = {
+    const maintenanceData: Omit<MaintenanceBase, "id"> = {
       title: newMaintenance.title,
       description: newMaintenance.description,
       startTime: new Date(newMaintenance.startTime).toISOString(),
