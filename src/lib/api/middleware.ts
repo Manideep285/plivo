@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance, AxiosResponse, AxiosError, InternalAxiosRequestConfig, AxiosHeaders } from 'axios';
 import { getCsrfToken, rateLimiter, handleApiError } from '../security';
 import { monitoring } from '../monitoring';
 
@@ -26,7 +26,7 @@ export const createApiClient = (): AxiosInstance => {
 
   // Request interceptor
   api.interceptors.request.use(
-    (config: InternalAxiosRequestConfig) => {
+    async (config: InternalAxiosRequestConfig) => {
       const startTime = Date.now();
       
       // Add request timing to config for response interceptor
@@ -58,22 +58,22 @@ export const createApiClient = (): AxiosInstance => {
         return request;
       }
 
-      // Add CSRF token
+      // Add CSRF token if available
       const csrfToken = getCsrfToken();
       if (csrfToken) {
-        config.headers = {
-          ...config.headers,
-          'X-CSRF-Token': csrfToken,
-        };
+        if (!config.headers) {
+          config.headers = new AxiosHeaders();
+        }
+        config.headers.set('X-CSRF-Token', csrfToken);
       }
 
-      // Add auth token
-      const token = localStorage.getItem('authToken');
+      // Add auth token if available
+      const token = await getAccessToken();
       if (token) {
-        config.headers = {
-          ...config.headers,
-          Authorization: `Bearer ${token}`,
-        };
+        if (!config.headers) {
+          config.headers = new AxiosHeaders();
+        }
+        config.headers.set('Authorization', `Bearer ${token}`);
       }
 
       return config;

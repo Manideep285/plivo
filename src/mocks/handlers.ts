@@ -78,7 +78,7 @@ export const handlers = [
 
   // Metrics endpoints
   http.get('/api/metrics/:serviceId', ({ params }) => {
-    const { serviceId } = params as GetMetricsRequest;
+    const serviceId = params.serviceId as string;
     return HttpResponse.json({
       uptime: 99.9,
       responseTime: 250,

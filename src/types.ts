@@ -1,5 +1,7 @@
 import { IncidentStatus, IncidentSeverity, MaintenanceStatus } from "./types/enums";
 
+export { IncidentStatus, IncidentSeverity, MaintenanceStatus };
+
 export type ServiceStatus = "operational" | "degraded" | "partial" | "major";
 
 export interface Service {

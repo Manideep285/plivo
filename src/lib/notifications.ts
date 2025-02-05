@@ -69,8 +69,8 @@ export class NotificationService {
       <h2>Scheduled Maintenance</h2>
       <p><strong>Service:</strong> ${service.name}</p>
       <p><strong>Description:</strong> ${maintenance.description}</p>
-      <p><strong>Start Time:</strong> ${new Date(maintenance.startDateTime).toLocaleString()}</p>
-      <p><strong>End Time:</strong> ${new Date(maintenance.endDateTime).toLocaleString()}</p>
+      <p><strong>Start Time:</strong> ${new Date(maintenance.startTime).toLocaleString()}</p>
+      <p><strong>End Time:</strong> ${new Date(maintenance.endTime).toLocaleString()}</p>
       <p><strong>Impact:</strong> ${maintenance.impact}</p>
       <hr/>
       <p>View more details on your status page dashboard.</p>

@@ -75,7 +75,10 @@ export function useAuth0User() {
     isLoading,
     accessToken,
     login,
-    logout: () => logout({ logoutParams: { returnTo: window.location.origin } }),
+    logout: () => {
+      logout();
+      window.location.href = window.location.origin;
+    },
     hasRole,
     hasPermission,
   };

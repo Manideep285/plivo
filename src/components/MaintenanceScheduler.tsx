@@ -62,16 +62,18 @@ export function MaintenanceScheduler({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newMaintenance: Omit<Maintenance, "id"> = {
+    
+    const maintenanceData: Omit<Maintenance, "id"> = {
       title: newMaintenance.title,
       description: newMaintenance.description,
       startTime: new Date(newMaintenance.startTime).toISOString(),
       endTime: new Date(newMaintenance.endTime).toISOString(),
-      status: newMaintenance.status,
+      status: MaintenanceStatus.SCHEDULED,
+      serviceId: newMaintenance.serviceIds[0],
       serviceIds: newMaintenance.serviceIds,
-      createdBy: "current-user", // Replace with actual user ID
     };
-    onMaintenanceAdd(newMaintenance);
+
+    onMaintenanceAdd(maintenanceData);
     setIsCreateDialogOpen(false);
     setNewMaintenance({
       title: "",
@@ -227,10 +229,10 @@ export function MaintenanceScheduler({
               "transition-all duration-200",
               maintenance.status !== "completed" && "border-l-4",
               {
-                "border-l-blue-500": maintenance.status === "scheduled",
-                "border-l-yellow-500": maintenance.status === "in_progress",
-                "border-l-green-500": maintenance.status === "completed",
-                "border-l-red-500": maintenance.status === "cancelled",
+                "border-l-yellow-500": maintenance.status === MaintenanceStatus.SCHEDULED,
+                "border-l-blue-500": maintenance.status === MaintenanceStatus.IN_PROGRESS,
+                "border-l-green-500": maintenance.status === MaintenanceStatus.COMPLETED,
+                "border-l-red-500": maintenance.status === MaintenanceStatus.CANCELLED,
               }
             )}>
               <CardHeader className="flex flex-row items-start justify-between space-y-0">

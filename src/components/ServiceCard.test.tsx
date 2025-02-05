@@ -1,15 +1,14 @@
 import { describe, it, expect } from 'vitest';
 import { render, screen } from '@testing-library/react';
 import { ServiceCard } from './ServiceCard';
-import { Service, ServiceStatus } from '@/types';
+import { Service } from '@/types';
 
 describe('ServiceCard', () => {
   const mockService: Service = {
     id: '1',
     name: 'Test Service',
     description: 'Test Description',
-    status: ServiceStatus.Operational,
-    monitoredUrl: 'https://test.com'
+    status: "operational"
   };
 
   it('renders service name and status', () => {
