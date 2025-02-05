@@ -46,10 +46,10 @@ export interface Maintenance {
   id: string;
   title: string;
   description: string;
+  startTime: string;
+  endTime: string;
   scheduledStart: string;
   scheduledEnd: string;
-  startTime?: string;
-  endTime?: string;
   status: MaintenanceStatus;
   serviceId: string;
   serviceIds?: string[];

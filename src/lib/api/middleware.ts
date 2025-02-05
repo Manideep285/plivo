@@ -68,7 +68,7 @@ export const createApiClient = (): AxiosInstance => {
       }
 
       // Add auth token if available
-      const token = await getAccessToken();
+      const token = localStorage.getItem('auth_token');
       if (token) {
         if (!config.headers) {
           config.headers = new AxiosHeaders();

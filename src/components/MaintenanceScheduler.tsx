@@ -22,22 +22,22 @@ interface MaintenanceSchedulerProps {
 }
 
 const statusConfig = {
-  scheduled: {
+  [MaintenanceStatus.SCHEDULED]: {
     label: "Scheduled",
     color: "bg-blue-100 text-blue-800 border-blue-200",
     icon: Clock,
   },
-  in_progress: {
+  [MaintenanceStatus.IN_PROGRESS]: {
     label: "In Progress",
     color: "bg-yellow-100 text-yellow-800 border-yellow-200",
     icon: AlertCircle,
   },
-  completed: {
+  [MaintenanceStatus.COMPLETED]: {
     label: "Completed",
     color: "bg-green-100 text-green-800 border-green-200",
     icon: CheckCircle2,
   },
-  cancelled: {
+  [MaintenanceStatus.CANCELLED]: {
     label: "Cancelled",
     color: "bg-red-100 text-red-800 border-red-200",
     icon: AlertCircle,
@@ -57,7 +57,7 @@ export function MaintenanceScheduler({
     startTime: new Date(),
     endTime: new Date(),
     serviceIds: [] as string[],
-    status: "scheduled" as MaintenanceStatus,
+    status: MaintenanceStatus.SCHEDULED,
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -68,6 +68,8 @@ export function MaintenanceScheduler({
       description: newMaintenance.description,
       startTime: new Date(newMaintenance.startTime).toISOString(),
       endTime: new Date(newMaintenance.endTime).toISOString(),
+      scheduledStart: new Date(newMaintenance.startTime).toISOString(),
+      scheduledEnd: new Date(newMaintenance.endTime).toISOString(),
       status: MaintenanceStatus.SCHEDULED,
       serviceId: newMaintenance.serviceIds[0],
       serviceIds: newMaintenance.serviceIds,
@@ -80,12 +82,12 @@ export function MaintenanceScheduler({
       description: "",
       startTime: new Date(),
       endTime: new Date(),
-      serviceIds: [],
-      status: "scheduled",
+      status: MaintenanceStatus.SCHEDULED,
+      serviceIds: []
     });
   };
 
-  const isScheduled = (status: MaintenanceStatus) => status === "scheduled";
+  const isScheduled = (status: MaintenanceStatus) => status === MaintenanceStatus.SCHEDULED;
 
   return (
     <div className="space-y-6">
@@ -227,7 +229,7 @@ export function MaintenanceScheduler({
           return (
             <Card key={maintenance.id} className={cn(
               "transition-all duration-200",
-              maintenance.status !== "completed" && "border-l-4",
+              maintenance.status !== MaintenanceStatus.COMPLETED && "border-l-4",
               {
                 "border-l-yellow-500": maintenance.status === MaintenanceStatus.SCHEDULED,
                 "border-l-blue-500": maintenance.status === MaintenanceStatus.IN_PROGRESS,

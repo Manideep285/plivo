@@ -73,8 +73,8 @@ export function IncidentManager({
     title: "",
     description: "",
     serviceId: "",
-    status: "investigating" as IncidentStatus,
-    severity: "minor" as IncidentSeverity,
+    status: IncidentStatus.INVESTIGATING,
+    severity: IncidentSeverity.MINOR,
   });
 
   const handleCreateIncident = () => {
@@ -93,8 +93,8 @@ export function IncidentManager({
       title: "",
       description: "",
       serviceId: "",
-      status: "investigating",
-      severity: "minor",
+      status: IncidentStatus.INVESTIGATING,
+      severity: IncidentSeverity.MINOR,
     });
   };
 
@@ -249,7 +249,7 @@ export function IncidentManager({
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => handleUpdateStatus(incident, "identified")}
+                      onClick={() => handleUpdateStatus(incident, IncidentStatus.IDENTIFIED)}
                     >
                       Mark as Identified
                     </Button>
@@ -258,7 +258,7 @@ export function IncidentManager({
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => handleUpdateStatus(incident, "monitoring")}
+                      onClick={() => handleUpdateStatus(incident, IncidentStatus.MONITORING)}
                     >
                       Start Monitoring
                     </Button>
@@ -267,7 +267,7 @@ export function IncidentManager({
                     <Button
                       size="sm"
                       variant="outline"
-                      onClick={() => handleUpdateStatus(incident, "resolved")}
+                      onClick={() => handleUpdateStatus(incident, IncidentStatus.RESOLVED)}
                     >
                       Mark as Resolved
                     </Button>
