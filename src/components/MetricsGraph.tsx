@@ -9,7 +9,7 @@ interface MetricsGraphProps {
     value: number;
   }[];
   title: string;
-  type: 'latency' | 'uptime' | 'errors';
+  type: 'latency' | 'uptime' | 'errors' | 'requests' | 'response_time' | 'availability';
 }
 
 export function MetricsGraph({ data, title, type }: MetricsGraphProps) {
@@ -23,6 +23,12 @@ export function MetricsGraph({ data, title, type }: MetricsGraphProps) {
         return '#82ca9d';
       case 'errors':
         return '#ff7c7c';
+      case 'requests':
+        return '#ffd700';
+      case 'response_time':
+        return '#00bcd4';
+      case 'availability':
+        return '#4caf50';
       default:
         return '#8884d8';
     }
@@ -31,13 +37,34 @@ export function MetricsGraph({ data, title, type }: MetricsGraphProps) {
   const getUnit = () => {
     switch (type) {
       case 'latency':
+      case 'response_time':
         return 'ms';
       case 'uptime':
+      case 'availability':
         return '%';
+      case 'requests':
+        return '/min';
       case 'errors':
         return '';
       default:
         return '';
+    }
+  };
+
+  const formatValue = (value: number) => {
+    switch (type) {
+      case 'uptime':
+      case 'availability':
+        return value.toFixed(2) + '%';
+      case 'latency':
+      case 'response_time':
+        return value.toFixed(1) + 'ms';
+      case 'requests':
+        return value.toFixed(0) + '/min';
+      case 'errors':
+        return value.toString();
+      default:
+        return value.toString();
     }
   };
 
@@ -66,21 +93,29 @@ export function MetricsGraph({ data, title, type }: MetricsGraphProps) {
         <div className="h-[200px]">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart data={data} margin={{ top: 5, right: 5, left: 5, bottom: 5 }}>
-              <CartesianGrid strokeDasharray="3 3" />
+              <CartesianGrid strokeDasharray="3 3" opacity={0.2} />
               <XAxis
                 dataKey="timestamp"
                 scale="time"
                 type="number"
                 domain={['auto', 'auto']}
                 tickFormatter={(unixTime) => new Date(unixTime).toLocaleTimeString()}
+                stroke="#888"
               />
               <YAxis
                 unit={getUnit()}
-                width={40}
+                width={50}
+                stroke="#888"
+                tickFormatter={(value) => formatValue(value)}
               />
               <Tooltip
                 labelFormatter={(label) => new Date(label).toLocaleString()}
-                formatter={(value: number) => [`${value}${getUnit()}`, title]}
+                formatter={(value: number) => [formatValue(value), title]}
+                contentStyle={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                  border: '1px solid #ccc',
+                  borderRadius: '4px'
+                }}
               />
               <Line
                 type="monotone"
@@ -89,6 +124,7 @@ export function MetricsGraph({ data, title, type }: MetricsGraphProps) {
                 strokeWidth={2}
                 dot={false}
                 activeDot={{ r: 4 }}
+                animationDuration={300}
               />
             </LineChart>
           </ResponsiveContainer>
