@@ -1,7 +1,7 @@
 # Service Shield
 
 A modern service monitoring and incident management platform built with React and TypeScript.
-[Demo](https://9eec430a-b5ac-41f3-ba1a-21964ffec043-00-2www4gppjvj5e.worf.replit.dev/)
+[Demo](https://plivo-manideep.netlify.app/)
 ## Features
 
 ### 🚀 Core Features
