@@ -8,11 +8,14 @@ export default function Home() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Check if user is already authenticated
-    const isAuthenticated = localStorage.getItem('isAuthenticated');
-    if (isAuthenticated === 'true') {
-      navigate('/dashboard');
-    }
+    const checkAuth = () => {
+      const isAuthenticated = localStorage.getItem('isAuthenticated');
+      if (isAuthenticated === 'true') {
+        navigate('/dashboard', { replace: true });
+      }
+    };
+    
+    checkAuth();
   }, [navigate]);
 
   return (
