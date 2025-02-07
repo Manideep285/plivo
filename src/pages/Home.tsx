@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { LogIn } from 'lucide-react';
+import { LogIn, ActivitySquare } from 'lucide-react';
 
 export default function Home() {
   const navigate = useNavigate();
@@ -56,14 +56,23 @@ export default function Home() {
             </div>
           </div>
         </CardContent>
-        <CardFooter className="flex justify-center">
-          <Button 
-            size="lg" 
+        <CardFooter className="flex justify-center gap-4">
+          <Button
+            size="lg"
             onClick={() => navigate('/login')}
             className="w-[200px]"
           >
             <LogIn className="mr-2 h-4 w-4" />
             Get Started
+          </Button>
+          <Button
+            variant="outline"
+            size="lg"
+            onClick={() => navigate('/status')}
+            className="w-[200px]"
+          >
+            <ActivitySquare className="mr-2 h-4 w-4" />
+            View Status
           </Button>
         </CardFooter>
       </Card>
