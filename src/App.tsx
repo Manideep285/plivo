@@ -29,13 +29,13 @@ export default function App() {
               <Route path="/" element={<Home />} />
               
               {/* Protected Route */}
-              <Route 
-                path="/dashboard" 
+              <Route
+                path="/dashboard"
                 element={
-                  localStorage.getItem('isAuthenticated') === 'true' 
-                    ? <Dashboard /> 
-                    : <Navigate to="/login" />
-                } 
+                  <RequireAuth>
+                    <Dashboard />
+                  </RequireAuth>
+                }
               />
               
               <Route path="*" element={<Navigate to="/" />} />
@@ -46,4 +46,15 @@ export default function App() {
       </ThemeProvider>
     </QueryClientProvider>
   );
+}
+
+// Protected route wrapper component
+function RequireAuth({ children }: { children: JSX.Element }) {
+  const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
+  
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
+  }
+
+  return children;
 }
