@@ -5,6 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import Dashboard from "@/pages/Dashboard";
 import Login from '@/pages/Login';
 import Home from '@/pages/Home';
+import PublicStatus from '@/pages/PublicStatus';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,9 +23,21 @@ export default function App() {
         <Router>
           <main className="min-h-screen bg-background">
             <Routes>
-              <Route path="/" element={<Home />} />
+              {/* Public Routes */}
+              <Route path="/status" element={<PublicStatus />} />
               <Route path="/login" element={<Login />} />
-              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/" element={<Home />} />
+              
+              {/* Protected Route */}
+              <Route 
+                path="/dashboard" 
+                element={
+                  localStorage.getItem('isAuthenticated') === 'true' 
+                    ? <Dashboard /> 
+                    : <Navigate to="/login" />
+                } 
+              />
+              
               <Route path="*" element={<Navigate to="/" />} />
             </Routes>
             <Toaster />
